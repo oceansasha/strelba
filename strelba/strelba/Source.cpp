@@ -1,101 +1,103 @@
-#include<iostream>
+#include <iostream>
 #include <cstdlib>
+#include <cstdio>
 #include <ctime>
 
 using namespace std;
+void menu();
+void result(int** n, int* n1, int a, int b);
+void pobedit(int* n, int a);
 
-void pobeditel(int** a, int n, int m);
-void input(int** a, int n, int m, int z);
-void output(int** a, int n, int m);
+int main()	{
+	setlocale(LC_ALL, "Russian");
+	int n, m, key = 1;
+	menu();
+	cin >> key;
+	srand(time(NULL));
+	do
+		switch (key)	{
 
+		case 0:
+			cout << "Выход\n";
+			break;
 
-int main() {
+		case 1:
+			n = rand() % 31;
+			m = rand() % 11;
+			break;
 
-	setlocale(LC_ALL, "RUS");
-	int n, m;
+		case 2:
+			cout << "Введите n и m\n";
+			cin >> n;
+			cin >> m;
+			break;
 
-	cout << "Введите количество стрелков: "; cin >> n;
-	cout << "\nВведите количество выстрелов: "; cin >> m;
-	cout << endl;
+		default:
+			cout << "Ошибка!\n";
+			break;
+		}
 
-	int z = 10;
-	int** a = new int* [n];
-
+	while (n == 0 || m == 0 || n == 1 || m == 1);
+	cout << "Всего стрелков:" << n << "\nКоличество выстрелов:" << m << "\n";
+	int** a;
+	a = new int* [n];
 	for (int i = 0; i < n; i++)
-	{
 		a[i] = new int[m];
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < m; j++)
+			a[i][j] = rand() % 11;
+
+	for (int i = 0; i < n; i++)	{
+		for (int j = 0; j < m; j++)	{
+			printf("%5d", a[i][j]);
+		}
+		cout << endl;
 	}
 
-	input(a, n, m, z);
-	output(a, n, m);
-	pobeditel(a, n, m);
-	cout << "\n";
+	int* res;
+	res = new int[n];
+	result(a, res, n, m);
+	pobedit(res, n);
+	return 0;
 }
 
-void pobeditel(int** a, int n, int m) {
-	int max = 0, max_i = 0, count = 0, max_sum = 0, sum = 0;
-
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (a[i][j] > max) {
-				max = a[i][j];
-				max_i = i;
-			}
-		}
-	}
-
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < m; j++) {
-			if (a[i][j] == max) {
-				count += 1;
-			}
-		}
-	}
-
-	if (count > 1)
-	{
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				sum = sum + a[i][j];
-			}
-			if (sum > max_sum) {
-				max_sum = sum;
-			}
-
-			sum = 0;
-		}
-
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				sum = sum + a[i][j];
-			}
-
-			if (sum == max_sum) {
-				cout << "\nПобедитель - стрелок под номером " << i + 1 << endl;
-			}
-
-			sum = 0;
-		}
-	}
-	else cout << "\nПобедитель - стрелок под номером " << max_i + 1 << endl;
+void menu()	{
+	cout << "Выберите действие:\n";
+	cout << endl;
+	cout << "0 - Выход\n";
+	cout << "1 - Рандомные значения\n";
+	cout << "2 - Ручной ввод\n";
 }
 
-	void input(int** a, int n, int m, int z) {
-		int RandomD;
-		srand(time(NULL));
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				a[i][j] = rand() % z;
-			}
-		}
+void result(int** n, int* n1, int a, int b)	{
+	int s;
+
+	for (int i = 0; i < a; i++)	{
+		s = 0;
+		for (int j = 0; j < b; j++)
+			s += n[i][j];
+		n1[i] = s;
 	}
 
-	void output(int** a, int n, int m) {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				printf("%5d", a[i][j]);
-			}
-			printf("\n");
-		}
+	cout << "\nРезультаты: ";
+	for (int i = 0; i < a; i++)
+		cout << n1[i] << " ";
+}
+
+void pobedit(int* n, int a) {
+	int max;
+	max = n[0];
+	for (int i = 0; i < a; i++) {
+		if (n[i] > max)
+			max = n[i];
 	}
 
+	cout << "\n" << max << "\nПобедитель: ";
+
+	for (int i = 0; i < a; i++) {
+		if (n[i] == max) {
+			cout << "стрелок номер " << i + 1 << endl;
+		}
+
+	}
+}

@@ -1,4 +1,3 @@
 ﻿  Source.cpp
-C:\GitHub\strelba\strelba\strelba\Source.cpp(85,13): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\GitHub\strelba\strelba\strelba\Source.cpp(84,7): warning C4101: RandomD: неиспользованная локальная переменная
+C:\GitHub\strelba\strelba\strelba\Source.cpp(16,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   strelba.vcxproj -> C:\GitHub\strelba\strelba\Debug\strelba.exe
